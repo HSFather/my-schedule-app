@@ -50,6 +50,16 @@ const App = (props) => {
           )
         )}
       </div>
+      <hr />
+      <div>
+        {todos.map((item) =>
+          item.complete === true ? (
+            <li className="completed_list">{item.text}</li>
+          ) : (
+            ""
+          )
+        )}
+      </div>
     </div>
   );
 };
