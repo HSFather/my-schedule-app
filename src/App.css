@@ -28,6 +28,7 @@ p {
   border: 0;
 }
 .modal > section {
+  height: 450px;
   width: 90%;
   max-width: 450px;
   margin: 0 auto;

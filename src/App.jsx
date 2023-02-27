@@ -1,52 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Todo from "./component/Todo";
+import Modal from "./component/Modal";
+import CompletedTodo from "./component/completedTodo";
 import "./App.css";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import moment from "moment/moment";
-import Todo from "./Todo";
-import Modal from "./Modal";
-import CompletedTodo from "./completedTodo";
+// import "react-calendar/dist/Calendar.css";
+
+/* todo
+{
+  task: "밥 먹기",
+  from : Date,
+  to: Date,
+  complte: false,
+  fail, false,
+  created: Date
+}
+*/
+
+// const displayDate = (date) => {
+//   return moment(date).format("")
+// }
 
 function App(props) {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "놀러가기",
-      complete: false,
-    },
-    {
-      id: 2,
-      text: "잠자기",
-      complete: false,
-    },
-    {
-      id: 3,
-      text: "먹기",
-      complete: false,
-    },
-  ]);
+  const [todos, setTodos] = useState([]);
+  const [calendarModalOpen, setCalendarModalOpen] = useState(false);
 
-  const addTodo = (text) => {
-    const newTodos = [...todos, { id: Date.now(), text, complete: false }];
+  const handleOpenCalendarModal = () => {
+    setCalendarModalOpen(true);
+  };
+
+  const handleCloseCalendarModal = () => {
+    setCalendarModalOpen(false);
+  };
+
+  const addTodo = ({ text, renderDateRange }) => {
+    const newTodos = [...todos, { text, renderDateRange, complete: false }];
+
     setTodos(newTodos);
   };
+
+  // map으로 바꾸기
   const completeTodo = (index) => {
-    const newTodos = [...todos];
-    todos[index].complete = true;
+    const newTodos = todos.map((todo, i) => {
+      if (i === index) {
+        return {
+          ...todo,
+          complete: true,
+        };
+      }
+      return todo;
+    });
     setTodos(newTodos);
   };
-  const removeTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-  };
-  const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
+  const removeTodo = (index) => {
+    // const newTodos = [...todos];
+    // newTodos.splice(index, 1);
+    const newTodos = todos.filter((todo, i) => i !== index);
+
+    setTodos(newTodos);
   };
 
   return (
@@ -54,27 +65,35 @@ function App(props) {
       <div>
         <h1>Todo List</h1>
       </div>
+
       <div>
-        <button onClick={openModal}>추가하기</button>
-        <Modal open={modalOpen} close={closeModal} addTodo={addTodo}></Modal>
+        <button onClick={handleOpenCalendarModal}>추가하기</button>
+        <Modal
+          open={calendarModalOpen}
+          close={handleCloseCalendarModal}
+          addTodo={addTodo}
+        ></Modal>
       </div>
+
       <div>
         {todos.map((todo, index) =>
           todo.complete === false ? (
             <Todo
-              key={todo.id}
+              key={index}
               index={index}
               todo={todo}
               completeTodo={completeTodo}
               removeTodo={removeTodo}
-              onchange={onchange}
+              
             />
           ) : (
             ""
           )
         )}
       </div>
+
       <hr />
+
       <div>
         <h1>완료목록</h1>
         {todos.map((item) =>
