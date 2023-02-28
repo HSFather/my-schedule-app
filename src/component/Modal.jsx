@@ -4,7 +4,7 @@ import moment from "moment";
 import "react-calendar/dist/Calendar.css";
 import "./modal.css";
 
-export default function Modal({ open, close, addTodo, }) {
+export default function Modal({ open, close, addTodo }) {
   const [value, setValue] = useState("");
   const [date, setDate] = useState([new Date(), new Date()]);
 
@@ -31,7 +31,7 @@ export default function Modal({ open, close, addTodo, }) {
       return;
     }
 
-    addTodo({ text: value, date: moment(date).format("YYYY년 MM월 DD일") });
+    addTodo({ text: value, date: renderDateRange() });
     setValue("");
 
     close();

@@ -1,0 +1,13 @@
+.todo_wrap {
+  /* display: flex; */
+}
+.todo_content {
+  display: flex;
+}
+
+.todo_button {
+  display: inline-block;
+}
+.todo_text {
+  margin-top: 20px;
+}

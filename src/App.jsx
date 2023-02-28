@@ -32,8 +32,8 @@ function App(props) {
     setCalendarModalOpen(false);
   };
 
-  const addTodo = ({ text, renderDateRange }) => {
-    const newTodos = [...todos, { text, renderDateRange, complete: false }];
+  const addTodo = ({ text, date }) => {
+    const newTodos = [...todos, { text, date, complete: false }];
 
     setTodos(newTodos);
   };
@@ -84,7 +84,6 @@ function App(props) {
               todo={todo}
               completeTodo={completeTodo}
               removeTodo={removeTodo}
-              
             />
           ) : (
             ""

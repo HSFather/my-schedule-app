@@ -1,6 +1,7 @@
 p {
-  display: flex;
-  justify-content: space-between;
+  /* display: contents; */
+
+  /* justify-content: space-between; */
 }
 .todolist {
   display: inline-block;
